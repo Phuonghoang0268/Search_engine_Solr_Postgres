@@ -15,14 +15,14 @@ python index.py --core <name of core> --input ./data/<corpus file>
 ```
 Example: indexing <code>corpus-500000.json</code> containing the first 50000 entries from the original corpus
 ```bash
-% python index.py --core wiki --input ./data/corpus-50000.json 
-Processed 1000 documents
-Processed 2000 documents
-Processed 3000 documents
-Processed 4000 documents
-Processed 5000 documents
+% python index.py --core wiki --input ./data/corpus-40000.json 
+Successfully indexed documents 1 - 1000
+Successfully indexed documents 1001 - 2000
+Successfully indexed documents 2001 - 3000
+Successfully indexed documents 3001 - 4000
+Successfully indexed documents 4001 - 5000
 ...
-Finished indexing 50000 documents
+Finished indexing 40000 documents
 ```
 
 ### Check the number of documents
@@ -54,4 +54,9 @@ if response.status_code == 200:
     num_found = data['response']['numFound']
     print(num_found)
 # Output: 50000
+```
+
+## Delete all documents
+```bash
+curl 'http://localhost:8983/solr/<name of core>/update?commit=true' --data '<delete><query>*:*</query></delete>'
 ```

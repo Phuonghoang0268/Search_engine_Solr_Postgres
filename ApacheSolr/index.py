@@ -12,10 +12,6 @@ parser.add_argument('--core', '-c', help='Name of core', required=True, type=str
 parser.add_argument('--input', '-i', help="Path to input file", required=True, type=str)
 args = parser.parse_args()
 
-def batch_iterable(iterable, batch_size=2):
-    args = [iter(iterable)] * batch_size
-    return (tuple(filterfalse(lambda x: x is None, group)) for group in zip_longest(fillvalue=None, *args))
-
 def main():
     core = args.core
     filepath = args.input
@@ -28,22 +24,19 @@ def main():
         sys.exit(1)
     
     solr = pysolr.Solr(f'{SOLR_URL}/solr/{core}', always_commit=True)
-    to_index = []
-    with open(filepath, 'r') as file:
-        for line in file:
-            input_elem = json.loads(line.strip())
-            output_elem = dict()
-            output_elem['id'] = input_elem['id']
-            output_elem['text'] = input_elem['text']
-            to_index.append(output_elem)
-            count += 1
-            if count % BATCH_SIZE == 0:
-                solr.add(to_index)
-                print(f'Processed {count} documents')
-                to_index = []
-    solr.add(to_index)
+
+    with open(filepath, 'r') as input_file:
+        documents = json.load(input_file)
+
+    for i in range(0, len(documents), BATCH_SIZE):
+        batch = documents[i:i+BATCH_SIZE]
+        try:
+            solr.add(batch)
+            print(f'Successfully indexed documents {i+1} - {i+len(batch)}')
+        except Exception as err:
+            print(f'Error while indexing documents {i+1} - {i+len(batch)}: {err}')
     
-    print(f'Finished indexing {count} documents')
+    print(f'Finished indexing {len(documents)} documents')
 
 if __name__ == '__main__':
     main()
