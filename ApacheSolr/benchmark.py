@@ -11,7 +11,7 @@ parser.add_argument('--core', '-c', help='Name of core', required=True, type=str
 parser.add_argument('--scale', '-s', help='Scale factor', required=True, type=int)
 args = parser.parse_args()
 
-COMMANDS = os.environ['COMMANDS'].split(' ')
+COMMANDS = ['TOP_10', 'TOP_10_COUNT', 'COUNT']
 WARMUP_TIME = 1 * 60 # 1 minute
 NUM_ITER = 6
 SOLR_URL = "http://localhost:8983"
@@ -61,7 +61,7 @@ def read_queries(query_path):
     for q in open(query_path):
         c = json.loads(q)
         query = ''
-        if 'intersection' in c['tags']:
+        if 'intersection' in c['tags'] or 'two-phase-critic' in c['tags']:
             raw = c['query'].split('+')
             terms = [t.strip() for t in raw if t != '']
             i = 0
