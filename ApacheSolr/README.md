@@ -63,7 +63,7 @@ curl 'http://localhost:8983/solr/<name of core>/update?commit=true' --data '<del
 
 ## Run benchmark queries
 ```bash
-python benchmak.py --query_path <path to queries file> --core <name of core> --scale <size of corpus>
+python benchmark.py --query_path <path to queries file> --core <name of core> --scale <size of corpus>
 ```
 The last parameter, <code>--scale</code>, is currently only for saving results, it's not very important but it is required.
 Example: running the queries saved in the file <code>queries.txt</code> saved in <code>/queries</code> on a corpus with 40000 documents:
