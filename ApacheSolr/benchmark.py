@@ -8,11 +8,12 @@ import argparse
 parser = argparse.ArgumentParser(description="Benchmark Apache Solr")
 parser.add_argument('--query_path', '-q', help='Path to queries file', required=True, type=str)
 parser.add_argument('--core', '-c', help='Name of core', required=True, type=str)
+parser.add_argument('--scale', '-s', help='Scale factor', required=True, type=int)
 args = parser.parse_args()
 
 COMMANDS = os.environ['COMMANDS'].split(' ')
 WARMUP_TIME = 1 * 60 # 1 minute
-NUM_ITER = 10
+NUM_ITER = 6
 SOLR_URL = "http://localhost:8983"
 
 class SolrEngine:
@@ -24,17 +25,17 @@ class SolrEngine:
     def query(self, query, command):
         if command == 'COUNT':
             # COUNT: Output the document count
-            search_ret = self.solr.search(q=f'text:{query}', qf='text', wt='json', rows=0)
+            search_ret = self.solr.search(q=query, qf='text', wt='json', rows=0)
             count = search_ret.hits
         elif command == 'TOP_10':
             # TOP_10: Compute the top 10 elements and output "1"
-            search_ret = self.solr.search(q=f'text:{query}', qf='text', wt='json',
+            search_ret = self.solr.search(q=query, qf='text', wt='json',
                                         rows=10, fl='id,score', sort='score desc')
             count = 1
         elif command == 'TOP_10_COUNT':
             # TOP_10_COUNT: Compute the top 10 documents and the overall
             # count of matching documents, and output the document count
-            search_ret = self.solr.search(q=f'text:{query}', qf='text', wt='json',
+            search_ret = self.solr.search(q=query, qf='text', wt='json',
                                         rows=10, fl='id,score', sort='score desc')
             count = search_ret.hits
         else:
@@ -59,7 +60,29 @@ def read_queries(query_path):
     queries = []
     for q in open(query_path):
         c = json.loads(q)
-        queries.append(Query(c["query"], c["tags"]))
+        query = ''
+        if 'intersection' in c['tags']:
+            raw = c['query'].split('+')
+            terms = [t.strip() for t in raw if t != '']
+            i = 0
+            query = f'text:{terms[i]}'
+            for i in range(1, len(terms)):
+                query += f' AND text:{terms[i]}'
+        elif 'union' in c['tags']:
+            terms = c['query'].split()
+            i = 0
+            query = f'text:{terms[i]}'
+            for i in range(1, len(terms)):
+                query += f' OR text:{terms[i]}'
+        elif 'phrase' in c['tags']:
+            raw = c['query'].split('\"')
+            for t in raw:
+                if t != '':
+                    query = f'text:"{t}"'
+        else:
+            query = f'text:{c["query"]}'
+                    
+        queries.append(Query(query=query, tags=c["tags"]))
     return queries
 
 # Print progress, borrowed from https://stackoverflow.com/questions/3173320/text-progress-bar-in-terminal-with-block-characters
@@ -104,13 +127,13 @@ def main():
         print('======================')
         print(f'BENCHMARKING {command}')
         solr_engine = SolrEngine()
-        queries_shuffled = list(queries[:])
+        # queries_shuffled = list(queries[:])
         random.seed(2)
-        random.shuffle(queries_shuffled)
+        # random.shuffle(queries_shuffled)
         warmup_start = time.monotonic()
         printProgressBar(0, prefix='Warmup:', suffix='Complete', length=50)
         while True:
-            for _ in drive(queries_shuffled, solr_engine, command):
+            for _ in drive(queries, solr_engine, command):
                 pass
             progress = min(1, (time.monotonic() - warmup_start) / WARMUP_TIME)
             printProgressBar(progress, prefix='Warmup:', suffix='Complete', length=50)
@@ -118,7 +141,7 @@ def main():
                 break
         printProgressBar(0, prefix='Run: ', suffix='Complete', length=50)
         for i in range(NUM_ITER):
-            for (query, count, duration) in drive(queries_shuffled, solr_engine, command):
+            for (query, count, duration) in drive(queries, solr_engine, command):
                 if count == -999:
                     query_idx[query.query] = {'count': -1, 'duration': []}
                 else:
@@ -128,7 +151,7 @@ def main():
         for query in engine_results:
             query['duration'].sort()
         results[command] = engine_results
-    with open('results.json', 'w') as fp:
+    with open(f'./results/results_sc{args.scale}.json', 'w') as fp:
         json.dump(obj=results, fp=fp, indent=4)
 
 if __name__ == '__main__':
