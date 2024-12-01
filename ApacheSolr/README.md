@@ -60,3 +60,26 @@ if response.status_code == 200:
 ```bash
 curl 'http://localhost:8983/solr/<name of core>/update?commit=true' --data '<delete><query>*:*</query></delete>'
 ```
+
+## Run benchmark queries
+```bash
+python benchmak.py --query_path <path to queries file> --core <name of core> --scale <size of corpus>
+```
+The last parameter, <code>--scale</code>, is currently only for saving results, it's not very important but it is required.
+Example: running the queries saved in the file <code>queries.txt</code> saved in <code>/queries</code> on a corpus with 40000 documents:
+```bash
+% python benchmark.py --query_path queries/queries.txt --core wiki --scale 40000
+======================
+BENCHMARKING TOP_10
+Warmup: |██████████████████████████████████████████████████| 100.0% Complete
+Run:  |██████████████████████████████████████████████████| 100.0% Complete
+======================
+BENCHMARKING TOP_10_COUNT
+Warmup: |██████████████████████████████████████████████████| 100.0% Complete
+Run:  |██████████████████████████████████████████████████| 100.0% Complete
+======================
+BENCHMARKING COUNT
+Warmup: |██████████████████████████████████████████████████| 100.0% Complete
+Run:  |██████████████████████████████████████████████████| 100.0% Complete
+```
+The results are stored in <code>results_sc[scale].json</code> in <code>/results</code>.
