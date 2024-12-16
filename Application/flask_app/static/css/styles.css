@@ -1,0 +1,38 @@
+form.form-example {
+    display: table;
+}
+
+div.form-example {
+    display: table-row;
+}
+
+label,
+input {
+    display: table-cell;
+    margin-bottom: 10px;
+}
+
+label {
+    padding-right: 10px;
+}
+
+.highlight {
+    background-color: rgb(194, 250, 218);
+}
+
+fieldset.options div {
+    display: flex;
+}
+
+td, th {
+    padding-top: 2em!important;
+    padding-bottom: 2em!important;
+}
+
+h4.subtitle {
+    margin-bottom: 10px!important;
+}
+
+.block {
+    padding-top: 20px!important;
+}

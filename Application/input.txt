@@ -1,0 +1,7 @@
+abc\\'def
+abc
+C. Bal\\'azs, E. L. Berger
+at Tevatron and\n  LHC energies
+From dyadic $\\Lambda_{\\alpha}$ to
+In the \"inertial range\" above
+some line with \. character

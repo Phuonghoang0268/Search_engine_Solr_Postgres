@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+</head>
+<body>
+    <div class="h-screen w-screen">
+        <div class="container h-screen mx-auto justify-center items-center md:p-0 py-6">
+            <div class="has-addons">
+                <h1 class="title is-4"><span class="tag is-danger is-light is-medium">{{db}}</span> Query returned {{total}} results in {{duration}} seconds</h1>
+            </div>
+            <div>
+                <a class="subtitle is-5" href="{{url_for('home')}}">← Back to search page</a>
+            </div>
+            <table class="table">
+                <tbody>
+                    {% for doc in results %}
+                    <tr>
+                        <th>{{loop.index}}</th>
+                        <td>
+                            <h4 class="subtitle is-4">{{doc['title'][0]|safe}}</h4>
+                            <span class="button is-small is-info is-dark"><a href="https://arxiv.org/pdf/{{doc['id']}}" target="_blank" rel="noopener noreferrer">arXiv: {{doc['id']}}</a></span>
+                            <span class="tag is-dark is-medium">{{doc['categories'][0]|safe}}</span>
+                            <div class="block">
+                            <!-- <p><b>Document score:</b> {{doc['score']|safe}}</p> -->
+                            <!-- <p><b>Updated:</b> {{doc['update_date'][0]|safe}}</p> -->
+                            <p><b>Author(s):</b> {{doc['authors'][0]|safe}}</p>
+                            <p><b>Abstract:</b></p>
+                            <div class="content">
+                                <p>{{doc['abstract'][0]|safe}}</p>
+                            </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

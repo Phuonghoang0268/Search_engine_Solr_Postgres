@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+</head>
+
+<body>
+    <h1 class="text-3xl font-bold underline">
+        Hello world!
+    </h1>
+    <form action="/search" method="get" class="form-example">
+        <!-- Search query #0 -->
+        <fieldset>
+        <legend>Search term(s)</legend>
+        <div class="form-example">
+            <label for="field0">Field to search:</label>
+            <select name="field0" id="field0">
+                <option value="all">All fields</option>
+                <option value="title">Title</option>
+                <option value="authors">Author</option>
+                <option value="abstract">Abstract</option>
+                <option value="id">arXiv identifier</option>
+                <option value="doi">DOI</option>
+            </select>
+        </div>
+        <div class="form-example">
+            <label for="query0">Query to search: </label>
+            <input type="text" name="query0" id="query0" required />
+        </div>
+
+        <!-- Connector #0 -->
+        <div class="form-example">
+            <label for="connector0">Relationship:</label>
+            <select name="connector0" id="connector0">
+                <option value="AND">AND</option>
+                <option value="OR">OR</option>
+            </select>
+        </div>
+
+        <!-- Search query #1 -->
+        <div class="form-example">
+            <label for="field1">Field to search:</label>
+            <select name="field1" id="field1">
+                <option value="all">All fields</option>
+                <option value="title">Title</option>
+                <option value="authors">Author</option>
+                <option value="abstract">Abstract</option>
+                <option value="id">arXiv identifier</option>
+                <option value="doi">DOI</option>
+            </select>
+        </div>
+        <div class="form-example">
+            <label for="query1">Query to search: </label>
+            <input type="text" name="query1" id="query1"/>
+        </div>
+
+        <!-- Connector #1 -->
+        <div class="form-example">
+            <label for="connector1">Relationship:</label>
+            <select name="connector1" id="connector1">
+                <option value="AND">AND</option>
+                <option value="OR">OR</option>
+            </select>
+        </div>
+
+        <!-- Search query #2 -->
+        <div class="form-example">
+            <label for="field2">Field to search:</label>
+            <select name="field2" id="field2">
+                <option value="all">All fields</option>
+                <option value="title">Title</option>
+                <option value="authors">Author</option>
+                <option value="abstract">Abstract</option>
+                <option value="id">arXiv identifier</option>
+                <option value="doi">DOI</option>
+            </select>
+        </div>
+        <div class="form-example">
+            <label for="query2">Query to search: </label>
+            <input type="text" name="query2" id="query2"/>
+        </div>
+        </fieldset>
+
+        <div>
+            <fieldset class="options">
+                <legend>Categories</legend>
+              
+                <div>
+                    <input type="checkbox" id="cs" name="cs" checked />
+                    <label for="cs">Computer Science</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="econ" name="econ" checked />
+                    <label for="econ">Economics</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="eess" name="eess" checked />
+                    <label for="eess">Electrical Engineering and Systems Science</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="math" name="math" checked />
+                    <label for="math">Mathematics</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="physics" name="physics" checked />
+                    <label for="physics">Physics</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="q-bio" name="q-bio" checked />
+                    <label for="q-bio">Quantitative Biology</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="q-fin" name="q-fin" checked />
+                    <label for="q-fin">Quantitative Finance</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="stat" name="stat" checked />
+                    <label for="stat">Statistics</label>
+                </div>
+            </fieldset>     
+            
+            <div>
+                <fieldset>
+                    <legend>Update date</legend>
+                    <div class="form-example">
+                        <label for="start">Start date:</label>
+                        <input type="date" id="start" name="start" value="2001-01-01" min="2001-01-01" max="2025-01-01" />
+                    </div>
+                    <div class="form-example">
+                        <label for="start">End date:</label>
+                        <input type="date" id="end" name="end" value="2025-01-01" min="2001-01-01" max="2025-01-01" />
+                    </div>
+                </fieldset>
+            </div>
+
+        </div>
+        <div class="form-example">
+            <input type="submit" value="Search" />
+        </div>
+    </form>
+</body>
+
+</html>

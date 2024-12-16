@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
+</head>
+<body>
+    <div class="h-screen w-screen bg-gradient-to-r from-cyan-700 to-sky-800">
+        <div class="container h-screen mx-auto flex justify-center items-center md:p-0">
+            <form action="/search" method="get" class="px-16 py-4 grid grid-cols-1 gap-6 bg-white shadow-lg rounded-lg">
+                <!-- Search term #0 -->            
+                <div>
+                    <label for="field0" class="label">Search term</label>
+                    <div class="field has-addons">
+                        <p class="control">
+                            <span class="select">
+                                <select name="field0" id="field0">
+                                    <option value="all">All fields</option>
+                                    <option value="title">Title</option>
+                                    <option value="authors">Author</option>
+                                    <option value="abstract">Abstract</option>
+                                    <option value="id">arXiv ID</option>
+                                    <option value="doi">DOI</option>
+                                </select>
+                            </span>
+                        </p>
+                        <!-- <p class="control">
+                            <span class="select">
+                                <select name="match0" id="match0">
+                                    <option value="exact">Exact</option>
+                                    <option value="fuzzy">Fuzzy</option>
+                                </select>
+                            </span>
+                        </p> -->
+                        <p class="control is-expanded">
+                            <input name="query0" id="query0" class="input" type="text" placeholder="Search term" required>
+                        </p>
+                    </div>
+                </div>
+                <!-- Connector #0 + Search term #1 -->
+                <div>
+                    <label for="field1" class="label">Search term</label>
+                    <div class="field has-addons">
+                        <div class="control">
+                            <div class="select">
+                                <select name="connector0" id="connector0">
+                                    <option value="AND">AND</option>
+                                    <option value="OR">OR</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="control">
+                            <span class="select">
+                                <select name="field1" id="field1">
+                                    <option value="all">All fields</option>
+                                    <option value="title">Title</option>
+                                    <option value="authors">Author</option>
+                                    <option value="abstract">Abstract</option>
+                                    <option value="id">arXiv ID</option>
+                                    <option value="doi">DOI</option>
+                                </select>
+                            </span>
+                        </p>
+                        <!-- <p class="control">
+                            <span class="select">
+                                <select name="match1" id="match1">
+                                    <option value="exact">Exact</option>
+                                    <option value="fuzzy">Fuzzy</option>
+                                </select>
+                            </span>
+                        </p> -->
+                        <p class="control is-expanded">
+                            <input name="query1" id="query1" class="input" type="text" placeholder="Search term">
+                        </p>
+                    </div>
+                </div>
+                <!-- Connector #1 + Search term #2 -->
+                <div>
+                    <label for="field2" class="label">Search term</label>
+                    <div class="field has-addons">
+                        <div class="control">
+                            <div class="select">
+                                <select name="connector1" id="connector1">
+                                    <option value="AND">AND</option>
+                                    <option value="OR">OR</option>
+                                </select>
+                            </div>
+                        </div>
+                        <p class="control">
+                            <span class="select">
+                                <select name="field2" id="field2">
+                                    <option value="all">All fields</option>
+                                    <option value="title">Title</option>
+                                    <option value="authors">Author</option>
+                                    <option value="abstract">Abstract</option>
+                                    <option value="id">arXiv ID</option>
+                                    <option value="doi">DOI</option>
+                                </select>
+                            </span>
+                        </p>
+                        <!-- <p class="control">
+                            <span class="select">
+                                <select name="match2" id="match2">
+                                    <option value="exact">Exact</option>
+                                    <option value="fuzzy">Fuzzy</option>
+                                </select>
+                            </span>
+                        </p> -->
+                        <p class="control is-expanded">
+                            <input name="query2" id="query2" class="input" type="text" placeholder="Search term">
+                        </p>
+                    </div>
+                </div>
+                <!-- Categories checkboxes -->
+                <div>
+                    <h3 class="label">Categories</h3>
+                    <div class="field columns">
+                        <div class="column">
+                            <div class="control">
+                                <label for="cs" class="checkbox">
+                                    <input type="checkbox" id="cs" name="cs" checked>
+                                    Computer Science
+                                </label>
+                            </div>
+                            <div class="control">
+                                <label for="econ" class="checkbox">
+                                    <input type="checkbox" id="econ" name="econ" checked>
+                                    Economics
+                                </label>
+                            </div>
+                            <div class="control">
+                                <label for="eess" class="checkbox">
+                                    <input type="checkbox" id="eess" name="eess" checked>
+                                    Electrical Engineering and Systems Science
+                                </label>
+                            </div>
+                            <div class="control">
+                                <label for="math" class="checkbox">
+                                    <input type="checkbox" id="math" name="math" checked>
+                                    Mathematics
+                                </label>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="control">
+                                <label for="physics" class="checkbox">
+                                    <input type="checkbox" id="physics" name="physics" checked>
+                                    Physics
+                                </label>
+                            </div>
+                            <div class="control">
+                                <label for="q-bio" class="checkbox">
+                                    <input type="checkbox" id="q-bio" name="q-bio" checked>
+                                    Quantitative Biology
+                                </label>
+                            </div>
+                            <div class="control">
+                                <label for="q-fin" class="checkbox">
+                                    <input type="checkbox" id="q-fin" name="q-fin" checked>
+                                    Quantitative Finance
+                                </label>
+                            </div>
+                            <div class="control">
+                                <label for="stat" class="checkbox">
+                                    <input type="checkbox" id="stat" name="stat" checked>
+                                    Statistics
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Date selectors -->
+                <div>
+                    <div class="columns">
+                        <div class="column">
+                            <div class="field">
+                                <h3 class="label">Update date</h3>
+                                <div>
+                                    <label for="start">Start date:</label>
+                                    <input type="date" id="start" name="start" value="2001-01-01" min="2001-01-01" max="2025-01-01" />
+                                </div>
+                                <div>
+                                    <label for="start">End date:</label>
+                                    <input type="date" id="end" name="end" value="2025-01-01" min="2001-01-01" max="2025-01-01" />    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <h3 class="label">Database</h3>
+                            <p class="control">
+                                <span class="select">
+                                    <select name="db" id="db">
+                                        <option value="solr">Apache Solr</option>
+                                        <option value="pg">PostgreSQL</option>
+                                    </select>
+                                </span>
+                            </p>
+                        </div>
+                      </div>
+                </div>
+                <!-- Button -->
+                <div class="field is-grouped is-grouped-centered">
+                    <div class="control">
+                        <!-- <button class="button is-info">Search</button> -->
+                        <input class="button is-info" type="submit" value="Search" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
