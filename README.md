@@ -3,6 +3,7 @@
 ## Solr 
 
 ## PostgreSQL 
+First, all queries from the queries.txt file are formatted for use in PostgreSQL. The formats vary depending on the built-in full-text search, the pg_search extension, and the pg_bestmatch.rs tool. The converted queries are organized in the query folder, grouped by command type.
 
 ### Built-in Full Text Search 
 
