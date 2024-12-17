@@ -7,7 +7,7 @@ This project uses [Search Benchmark Game](https://github.com/quickwit-oss/search
 #### Pre-process data
 Use the following script to generate datasets of different scales based on the original data.
 ```bash
-python make_corpus.py --num_docs <number of documents>
+python make_corpus.py --input <path to JSON file> --num_docs <number of documents>
 ```
 
 #### Set up
